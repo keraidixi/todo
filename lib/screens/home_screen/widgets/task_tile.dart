@@ -9,48 +9,30 @@ class TaskTile extends StatelessWidget {
   final Task task;
   final int index;
 
-  const TaskTile({
-    super.key,
-    required this.task,
-    required this.index,
-  });
+  const TaskTile({super.key, required this.task, required this.index});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 5,
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: ListTile(
         leading: Checkbox(
           value: false,
           onChanged: (_) {
-            context.read<TaskCubit>().toggleTask(index);
+            context.read<TaskCubit>().deleteTask(index);
           },
         ),
-        title: Text(
-          task.title,
-        ),
+        title: Text(task.title),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text("Pending"),
-            Text(
-              task.category,
-            ),
-          ],
+          children: [Text(task.category)],
         ),
 
         trailing: IconButton(
           icon: const Icon(Icons.edit),
           onPressed: () {
-            showEditTaskDialog(
-              context,
-              index,
-              task.title,
-            );
+            showEditTaskDialog(context, index, task.title);
           },
         ),
       ),

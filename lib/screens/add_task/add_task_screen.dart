@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/task_cubit.dart';
-import '../../bloc/task_state.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -16,19 +15,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   String selectedCategory = "Work";
 
-  final categories = [
-    "Work",
-    "Personal",
-    "Study",
-    "Shopping",
-  ];
+  final categories = ["Work", "Personal", "Study", "Shopping"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Add Task"),
-      ),
+      appBar: AppBar(title: const Text("Add Task")),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -46,10 +38,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             DropdownButtonFormField(
               value: selectedCategory,
               items: categories.map((e) {
-                return DropdownMenuItem(
-                  value: e,
-                  child: Text(e),
-                );
+                return DropdownMenuItem(value: e, child: Text(e));
               }).toList(),
               onChanged: (value) {
                 setState(() {
@@ -58,15 +47,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               },
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
 
-            ElevatedButton(
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(minimumSize: const Size(300, 50)),
               onPressed: () {
                 context.read<TaskCubit>().addTask(
                   controller.text,
                   selectedCategory,
                 );
-
                 Navigator.pop(context);
               },
               child: const Text("Save"),

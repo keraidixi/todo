@@ -11,13 +11,7 @@ class CategoryFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TaskCubit, TaskState>(
       builder: (context, state) {
-        final categories = [
-          "All",
-          "Work",
-          "Personal",
-          "Study",
-          "Shopping",
-        ];
+        final categories = ["All", "Work", "Personal", "Study", "Shopping"];
 
         return SizedBox(
           height: 50,
@@ -28,17 +22,13 @@ class CategoryFilter extends StatelessWidget {
               final category = categories[index];
 
               return Padding(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: ChoiceChip(
                   label: Text(category),
-                  selected:
-                  state.selectedCategory == category,
+                  selected: state.selectedCategory == category,
+                  showCheckmark: false,
                   onSelected: (_) {
-                    context
-                        .read<TaskCubit>()
-                        .filterCategory(category);
-                  },
+                    context.read<TaskCubit>().filterCategory(category);              },
                 ),
               );
             },

@@ -3,23 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../bloc/task_cubit.dart';
 
-void showEditTaskDialog(
-    BuildContext context,
-    int index,
-    String oldTitle,
-    ) {
-  final controller = TextEditingController(
-    text: oldTitle,
-  );
+void showEditTaskDialog(BuildContext context, int index, String oldTitle) {
+  final controller = TextEditingController(text: oldTitle);
 
   showDialog(
     context: context,
     builder: (_) {
       return AlertDialog(
         title: const Text("Edit Task"),
-        content: TextField(
-          controller: controller,
-        ),
+        content: TextField(controller: controller),
         actions: [
           TextButton(
             onPressed: () {
@@ -27,10 +19,9 @@ void showEditTaskDialog(
                 index,
                 controller.text,
               );
-
               Navigator.pop(context);
             },
-            child: const Text("Update"),
+            child: const Text("Edit"),
           ),
         ],
       );

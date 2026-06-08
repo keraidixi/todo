@@ -3,39 +3,47 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/task_cubit.dart';
 import '../../bloc/task_state.dart';
-import '../add_task/add_task.dart';
+import '../add_task/add_task_screen.dart';
+import 'widgets/category_filter.dart';
 import 'widgets/task_counter.dart';
 import 'widgets/task_list.dart';
-import 'widgets/category_filter.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<TaskCubit>().loadTasks();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Todo App"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text("Todo App"), centerTitle: true),
       body: BlocListener<TaskCubit, TaskState>(
         listener: (context, state) {
           if (state.message != null) {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message!)),
-            );
+
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message!)));
           }
         },
         child: const Column(
           children: [
             TaskCounter(),
-
             CategoryFilter(),
-
-            Expanded(
-              child: TaskList(),
-            ),
+            SizedBox(height: 15),
+            Expanded(child: TaskList()),
           ],
         ),
       ),
@@ -44,9 +52,7 @@ class HomeScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => const AddTaskScreen(),
-            ),
+            MaterialPageRoute(builder: (_) => const AddTaskScreen()),
           );
         },
       ),

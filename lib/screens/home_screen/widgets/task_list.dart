@@ -13,6 +13,12 @@ class TaskList extends StatelessWidget {
     return BlocBuilder<TaskCubit, TaskState>(
       builder: (context, state) {
 
+        if (state.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
         final filteredTasks =
         state.selectedCategory == "All"
             ? state.tasks
@@ -23,9 +29,7 @@ class TaskList extends StatelessWidget {
 
         if (filteredTasks.isEmpty) {
           return const Center(
-            child: Text(
-              "No Tasks Available",
-            ),
+            child: Text("No Tasks Available"),
           );
         }
 

@@ -1,23 +1,28 @@
+import 'package:hive/hive.dart';
+
+part 'task_model.g.dart';
+
+@HiveType(typeId: 0)
 class Task {
+
+  @HiveField(0)
   final String title;
-  final bool isCompleted;
+
+  @HiveField(1)
   final String category;
 
   Task({
     required this.title,
     required this.category,
-    this.isCompleted = false,
   });
 
   Task copyWith({
     String? title,
-    bool? isCompleted,
     String? category,
   }) {
     return Task(
       title: title ?? this.title,
       category: category ?? this.category,
-      isCompleted: isCompleted ?? this.isCompleted,
     );
   }
 }

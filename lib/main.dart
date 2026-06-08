@@ -1,18 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/repository/task_repository.dart';
 
 import 'bloc/task_cubit.dart';
 import 'screens/home_screen/home_screen.dart';
 
-void main() {
+import 'package:hive_flutter/hive_flutter.dart';
+import 'model/task_model.dart';
+
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter();
+
+  Hive.registerAdapter(TaskAdapter());
+
+  await Hive.openBox<Task>('tasks');
+
   runApp(
     BlocProvider(
-      create: (_) => TaskCubit(),
+      create: (_) => TaskCubit(
+        TaskRepository(),
+      ),
       child: const MyApp(),
     ),
   );
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
