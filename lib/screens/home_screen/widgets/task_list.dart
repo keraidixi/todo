@@ -38,9 +38,6 @@ class TaskList extends StatelessWidget {
           itemBuilder: (context, index) {
             return TaskTile(
               task: filteredTasks[index],
-              index: state.tasks.indexOf(
-                filteredTasks[index],
-              ),
             );
           },
         );

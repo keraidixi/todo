@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/bloc/task_cubit.dart';
+import 'package:todo/model/task_model.dart';
 
-import '../../../bloc/task_cubit.dart';
+import '../../../bloc/task/edit_task.dart';
 
-void showEditTaskDialog(BuildContext context, int index, String oldTitle) {
-  final controller = TextEditingController(text: oldTitle);
+void showEditTaskDialog(BuildContext context, Task task) {
+  final controller = TextEditingController(text: task.title);
 
   showDialog(
     context: context,
@@ -16,7 +18,7 @@ void showEditTaskDialog(BuildContext context, int index, String oldTitle) {
           TextButton(
             onPressed: () {
               context.read<TaskCubit>().editTask(
-                index,
+                task,
                 controller.text,
               );
               Navigator.pop(context);

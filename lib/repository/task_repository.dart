@@ -1,9 +1,7 @@
 import 'package:hive/hive.dart';
-
 import '../model/task_model.dart';
 
 class TaskRepository {
-
   final box = Hive.box<Task>('tasks');
 
   List<Task> getTasks() {
@@ -14,11 +12,13 @@ class TaskRepository {
     box.add(task);
   }
 
-  void deleteTask(int index) {
-    box.deleteAt(index);
+  void deleteTask(Task task) {
+    final key = box.keyAt(box.values.toList().indexOf(task));
+    box.delete(key);
   }
 
-  void editTask(int index, Task task) {
-    box.putAt(index, task);
+  void editTask(Task oldTask, Task newTask) {
+    final key = box.keyAt(box.values.toList().indexOf(oldTask));
+    box.put(key, newTask);
   }
 }
