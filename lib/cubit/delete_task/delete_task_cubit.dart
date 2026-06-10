@@ -12,6 +12,7 @@ class DeleteTaskCubit extends Cubit<DeleteTaskState>{
 
   Future<void> deleteTask(Task task) async {
     emit(DeleteTaskInProgress());
+    await Future.delayed(const Duration(seconds: 2));
     try {
       await repository.deleteTask(task);
       emit(DeleteTaskSuccess());

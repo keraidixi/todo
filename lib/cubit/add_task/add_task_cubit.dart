@@ -11,6 +11,10 @@ class AddTaskCubit extends Cubit<AddTaskState> {
   AddTaskCubit(this.repository) : super(AddTaskInitial());
 
   Future<void> addTask(String title, String category) async {
+    if (title.isEmpty) {
+      emit(AddTaskFailure('Failed to Add Task'));
+      return;
+    }
     emit(AddTaskInProgress());
     await Future.delayed(const Duration(seconds: 2));
       try {

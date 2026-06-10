@@ -10,7 +10,13 @@ class EditTaskCubit extends Cubit<EditTaskState> {
   EditTaskCubit(this.repository) : super(EditTaskInitial());
 
   Future<void> editTask(Task task, String newTitle) async {
+
+    if (newTitle.trim() == task.title.trim()) {
+      emit(EditTaskFailure('Failed to Edit Task '));
+      return;
+    }
     emit(EditTaskInProgress());
+    await Future.delayed(const Duration(seconds: 2));
 
     try {
       final updatedTask = task.copyWith(

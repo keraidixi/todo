@@ -70,7 +70,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Task Added Successfully')));
                 }
                 else if(state is AddTaskFailure){
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to Add Task')));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
                 }
               }
             ),
