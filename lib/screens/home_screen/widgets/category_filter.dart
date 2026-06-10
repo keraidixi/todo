@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../bloc/task/filter_task.dart';
-import '../../../bloc/task_cubit.dart';
-import '../../../bloc/task_state.dart';
+import 'package:todo/cubit/task_filter/task_filter_state.dart';
+import '../../../cubit/task_filter/task_filter_cubit.dart';
 
 class CategoryFilter extends StatelessWidget {
   const CategoryFilter({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TaskCubit, TaskState>(
+    return BlocBuilder<TaskFilterCubit, TaskFilterState>(
       builder: (context, state) {
         final categories = ["All", "Work", "Personal", "Study", "Shopping"];
 
@@ -29,7 +27,7 @@ class CategoryFilter extends StatelessWidget {
                   selected: state.selectedCategory == category,
                   showCheckmark: false,
                   onSelected: (_) {
-                    context.read<TaskCubit>().filterCategory(category);              },
+                    context.read<TaskFilterCubit>().filterCategory(category);              },
                 ),
               );
             },

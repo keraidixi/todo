@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/task/add_task.dart';
-import '../../bloc/task_cubit.dart';
+import '../../cubit/add_task/add_task_cubit.dart';
+import '../../cubit/add_task/add_task_state.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -50,16 +50,29 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
             const SizedBox(height: 40),
 
-            OutlinedButton(
-              style: OutlinedButton.styleFrom(minimumSize: const Size(300, 50)),
-              onPressed: () {
-                context.read<TaskCubit>().addTask(
-                  controller.text,
-                  selectedCategory,
+            BlocConsumer<AddTaskCubit, AddTaskState>(
+              builder: (context, state) {
+                return state is AddTaskInProgress ? CircularProgressIndicator() : OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: Size(300, 50)
+                  ),
+                  onPressed: (){
+                    context.read<AddTaskCubit>().addTask(controller.text, selectedCategory);
+                  },
+                  child: Text('Save'),
                 );
-                Navigator.pop(context);
               },
-              child: const Text("Save"),
+                
+              listener: (context, state) {
+                if(state is AddTaskSuccess){
+                  Navigator.pop(context);
+                  controller.clear();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Task Added Successfully')));
+                }
+                else if(state is AddTaskFailure){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to Add Task')));
+                }
+              }
             ),
           ],
         ),

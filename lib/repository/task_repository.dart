@@ -12,13 +12,13 @@ class TaskRepository {
     box.add(task);
   }
 
-  void deleteTask(Task task) {
+  Future<void> deleteTask(Task task) async{
     final key = box.keyAt(box.values.toList().indexOf(task));
-    box.delete(key);
+    await box.delete(key);
   }
 
-  void editTask(Task oldTask, Task newTask) {
+  Future<void> editTask(Task oldTask, Task newTask) async {
     final key = box.keyAt(box.values.toList().indexOf(oldTask));
-    box.put(key, newTask);
+    await box.put(key, newTask);
   }
 }
